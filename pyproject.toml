@@ -1,0 +1,72 @@
+[tool.poetry]
+name = "office-tour"
+version = "0.1.0"
+description = "Django app template"
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.1.1"
+psycopg2-binary = "^2.9.3"
+gunicorn = "^20.1.0"
+django-extensions = "^3.2.1"
+djangorestframework = "^3.13.1"
+drf-spectacular = "^0.24.0"
+django-cors-headers = "^3.13.0"
+
+[tool.poetry.group.dev.dependencies]
+autoflake = "^1.5"
+black = "^22.8"
+coverage = { extras = ["toml"], version = "^6.4" }
+isort = "^5.10.1"
+pytest = "^7.1.3"
+pytest-cov = "^3.0.0"
+pytest-django = "^4.5.2"
+pyproject-flake8 = "^5.0.4"
+Werkzeug = "^2.2.2"
+factory-boy = "^3.2.1"
+pytest-factoryboy = "^2.5.0"
+
+[tool.isort]
+line_length = 88
+multi_line_output = 3
+force_grid_wrap = 0
+use_parentheses = true
+include_trailing_comma = true
+ensure_newline_before_comments = true
+atomic = true
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = """
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/foo.py
+"""
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "project.settings"
+addopts = """\
+    -vv \
+    -x \
+    --cov=app \
+    --cov-report=term-missing \
+    --cov-report=html \
+    """
+python_files = ["tests.py", "test_*.py", "*_tests.py", "tests_*.py", "tests/*.py"]
+junit_family = "xunit2"
+django_debug_mode = true
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["*/test*", "*/apps.py", "*/migrations/*", "*/project/*", "*manage.py"]
+
+[tool.flake8]
+max-line-length = 88
+exclude=["migrations", "settings*.py"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
